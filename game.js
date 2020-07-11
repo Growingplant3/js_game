@@ -1,19 +1,19 @@
 //　升目
-var fit = 3; // 何枚揃えたら良いか宣言する
+var number_to_align = 3; // 何枚揃えたら良いか宣言する
+var fit = number_to_align * 2; // 調整
 var area_width = fit; // 列数を宣言する
-var area_height = fit * 2; // 行数を宣言する
-var x_position; // x座標を宣言する 0から開始
-var y_position; // y座標を宣言する 0から開始
-var cell = []; // 配列に要素を格納する
+var area_height = fit; // 行数を宣言する
+//var x_position; // x座標を宣言する 0から開始
+//var y_position; // y座標を宣言する 0から開始
+// var cell = []; // 全てのtdを格納する配列
 var game_area = document.getElementById("game_area");
 for ( var i = 0; i < area_height; i++) {
-  cell[i] = [];
   var tr_tag = document.createElement("tr");
   for ( var j = 0; j < area_width; j++) {
     var td_tag = document.createElement("td");
-    td_tag.x_position = i;
-    td_tag.y_position = j;
-    cell[i][j] = td_tag;
+    // td_tag.x_position = i;
+    // td_tag.y_position = j;
+    // cell.push(td_tag);
     tr_tag.appendChild(td_tag);
   }
   game_area.appendChild(tr_tag);
@@ -33,10 +33,11 @@ var green = "green.png"
 for ( var i = 0; i < area_width * area_height; i++) {
   var img = document.createElement("img");
   img.src = question; // ?パス
-  img.width = 100; // リサイズ
-  img.height = 100; // リサイズ
+  img.width = 50; // リサイズ
+  img.height = 50; // リサイズ
   td_tags[i].appendChild(img);
 }
+var all_questions = document.getElementsByTagName("img");
 
 // 全ての色を配列に格納
 var color_pallete = [];
@@ -55,8 +56,8 @@ color_pallete = shuffle(color_pallete);
 for ( var j = 0; j < area_width * area_height; j++) {
   var img = document.createElement("img");
   img.src = color_pallete[j];
-  img.width = 100; // リサイズ
-  img.height = 100; // リサイズ
+  img.width = 50; // リサイズ
+  img.height = 50; // リサイズ
   td_tags[j].appendChild(img);
 }
 
@@ -83,6 +84,12 @@ var time_goes_by = setInterval(function() { // 10ミリ秒毎に発火する関�
   }
 },10);
 
+// クリックしたら?をめくる処理
+function flip_the_card(e) {
+  e.currentTarget.style.display = "none";
+};
+
+
 // css あとでbootstrap適応します
 for ( var i = 0; i < td_tags.length; i++) {
   td_tags[i].style.border = "thick solid black";
@@ -90,10 +97,16 @@ for ( var i = 0; i < td_tags.length; i++) {
 timer_frame[0].style.border = "thick solid black";
 timer_frame[0].style.width = "200px";
 
-// デバック
-console.log(cell);
-console.log(td_tags);
+// デバッグ
+// console.log(cell);
+console.log(all_questions.length); // デバッグ中は要素が72(2倍)になっている
+console.log(td_tags.length); // 36マス
+console.log("all_questions[4]は");
+console.log(all_questions[4]);
+console.log("all_questions[5]は");
+console.log(all_questions[5]);
+all_questions[4].src = color_pallete[3];
+console.log("color_pallete[3]は");
+console.log(color_pallete[3]);
 console.log(color_pallete);
 console.log(timer_frame);
-
-// x.positionとy.positionを取得して、クリックしたときの処理作成

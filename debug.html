@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>お試しモード</title>
+  </head>
+  <body>
+    <p>この文字</p>
+    <p>この文字</p>
+    <p>この文字</p>
+    <p>この文字</p>
+    <script>
+      function hide(e){
+        e.currentTarget.style.visibility = "hidden";
+        // この関数がイベントハンドラとして使用されるとき： this === e.currentTarget
+      }
+
+      var ps = document.getElementsByTagName('p');
+
+      for(var i = 0; i < ps.length; i++){
+        ps[i].addEventListener('click', hide, false);
+      }
+
+      // 周辺をクリックすると段落が消えます。
+    </script>
+  </body>
+</html>
