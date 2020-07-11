@@ -43,7 +43,7 @@ var color_pallete = [];
 for ( var i = 0; i < fit; i++) {
   color_pallete.push(red,vermilion,orange,yellow,light_blue,green);
 }
-// ランダム化して配置
+// 全ての色をランダム化して配置
 const shuffle = ([...color_pallete]) => {
   for ( var i = color_pallete.length - 1; i >= 0; i--) {
     var j = Math.floor(Math.random() * ( i + 1 ));
@@ -60,13 +60,42 @@ for ( var j = 0; j < area_width * area_height; j++) {
   td_tags[j].appendChild(img);
 }
 
-// css
+// カウントダウンタイマー
+var timer = document.getElementsByClassName("timer");
+var timer_frame = document.getElementsByClassName("timer_frame");
+var limit_time = 60 * 100; // 制限時間
+var today = new Date();
+var dead_line = new Date(today.getMilliseconds() + limit_time); // 現在時間に制限時間を加える
+var count_time = limit_time; // 時間経過を表現する変数に中身を入れ替える
+var time_goes_by = setInterval(function() { // 1秒毎に発火する関数
+  count_time -= 1; // 制限時間から1ミリ秒毎に1ずつ引かれていく
+  var elder = Math.floor(count_time / 100);
+  if (elder < 10) {
+    elder = "0" + elder;
+  }
+  var young = count_time % 100;
+  if (young < 10) {
+    young = "0" + young;
+  }
+  timer[0].innerHTML = (elder + ":" + young);
+  today = new Date(); // 再計算
+  if(count_time <= 0) { // 制限時間に到達〜過ぎたら
+    clearInterval(time_goes_by); // 時間経過を表現する関数を止める
+    console.log("time up!");
+  }
+},10);
+
+// css あとでbootstrap適応します
 for ( var i = 0; i < td_tags.length; i++) {
   td_tags[i].style.border = "thick solid black";
 }
+timer_frame[0].style.border = "thick solid black";
+timer_frame[0].style.width = "200px";
 
 // デバック
 console.log(game_area);
 console.log(cell);
 console.log(td_tags);
 console.log(color_pallete);
+// console.log(today);
+// console.log(dead_line);
