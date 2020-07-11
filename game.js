@@ -3,7 +3,7 @@ var fit = 3; // 何枚揃えたら良いか宣言する
 var area_width = fit; // 列数を宣言する
 var area_height = fit * 2; // 行数を宣言する
 var x_position; // x座標を宣言する 0から開始
-var y_posttion; // y座標を宣言する 0から開始
+var y_position; // y座標を宣言する 0から開始
 var cell = []; // 配列に要素を格納する
 var game_area = document.getElementById("game_area");
 for ( var i = 0; i < area_height; i++) {
@@ -12,7 +12,7 @@ for ( var i = 0; i < area_height; i++) {
   for ( var j = 0; j < area_width; j++) {
     var td_tag = document.createElement("td");
     td_tag.x_position = i;
-    td_tag.y_posttion = j;
+    td_tag.y_position = j;
     cell[i][j] = td_tag;
     tr_tag.appendChild(td_tag);
   }
@@ -65,23 +65,21 @@ var timer = document.getElementsByClassName("timer");
 var timer_frame = document.getElementsByClassName("timer_frame");
 var limit_time = 60 * 100; // 制限時間
 var today = new Date();
-var dead_line = new Date(today.getMilliseconds() + limit_time); // 現在時間に制限時間を加える
 var count_time = limit_time; // 時間経過を表現する変数に中身を入れ替える
-var time_goes_by = setInterval(function() { // 1秒毎に発火する関数
+var time_goes_by = setInterval(function() { // 10ミリ秒毎に発火する関数
   count_time -= 1; // 制限時間から1ミリ秒毎に1ずつ引かれていく
-  var elder = Math.floor(count_time / 100);
-  if (elder < 10) {
-    elder = "0" + elder;
+  var second = Math.floor(count_time / 100);
+  if (second < 10) {
+    second = "0" + second;
   }
-  var young = count_time % 100;
-  if (young < 10) {
-    young = "0" + young;
+  var millisecond = count_time % 100;
+  if (millisecond < 10) {
+    millisecond = "0" + millisecond;
   }
-  timer[0].innerHTML = (elder + ":" + young);
-  today = new Date(); // 再計算
-  if(count_time <= 0) { // 制限時間に到達〜過ぎたら
+  timer[0].innerHTML = (second + ":" + millisecond);
+  if(count_time <= 0) { // 制限時間に到達、もしくは制限時間を過ぎたら→
     clearInterval(time_goes_by); // 時間経過を表現する関数を止める
-    console.log("time up!");
+    console.log("time up!"); // デバッグ
   }
 },10);
 
@@ -93,9 +91,9 @@ timer_frame[0].style.border = "thick solid black";
 timer_frame[0].style.width = "200px";
 
 // デバック
-console.log(game_area);
 console.log(cell);
 console.log(td_tags);
 console.log(color_pallete);
-// console.log(today);
-// console.log(dead_line);
+console.log(timer_frame);
+
+// x.positionとy.positionを取得して、クリックしたときの処理作成
