@@ -3,6 +3,7 @@ var number_to_align = 3; // 何枚揃えたら良いか宣言する
 var fit = number_to_align * 2; // 調整
 var area_width = fit; // 列数を宣言する
 var area_height = fit; // 行数を宣言する
+var serial_number = -1; // 通し番号付与
 //var x_position; // x座標を宣言する 0から開始
 //var y_position; // y座標を宣言する 0から開始
 // var cell = []; // 全てのtdを格納する配列
@@ -11,6 +12,8 @@ for ( var i = 0; i < area_height; i++) {
   var tr_tag = document.createElement("tr");
   for ( var j = 0; j < area_width; j++) {
     var td_tag = document.createElement("td");
+    serial_number += 1;
+    td_tag.setAttribute('id',serial_number);
     // td_tag.x_position = i;
     // td_tag.y_position = j;
     // cell.push(td_tag);
@@ -86,9 +89,16 @@ var time_goes_by = setInterval(function() { // 10ミリ秒毎に発火する関�
 
 // クリックしたら?をめくる処理
 function flip_the_card(e) {
-  e.currentTarget.style.display = "none";
+  var choice_card = e.currentTarget;
+  console.log(choice_card);
+  console.log(choice_card.id*2);
+  console.log(choice_card.id);
+  all_questions[choice_card.id*2].src = color_pallete[choice_card.id];
+  console.log("関数発火しました"); // デバッグ
 };
-
+for(var i=0; i < td_tags.length; i++) {
+  td_tags[i].addEventListener('click', flip_the_card, false);
+};
 
 // css あとでbootstrap適応します
 for ( var i = 0; i < td_tags.length; i++) {
@@ -101,12 +111,12 @@ timer_frame[0].style.width = "200px";
 // console.log(cell);
 console.log(all_questions.length); // デバッグ中は要素が72(2倍)になっている
 console.log(td_tags.length); // 36マス
-console.log("all_questions[4]は");
-console.log(all_questions[4]);
-console.log("all_questions[5]は");
-console.log(all_questions[5]);
-all_questions[4].src = color_pallete[2];
-console.log("color_pallete[2]は");
-console.log(color_pallete[2]);
+// console.log("all_questions[4]は");
+// console.log(all_questions[4]);
+// console.log("all_questions[5]は");
+// console.log(all_questions[5]);
+// all_questions[4].src = color_pallete[2];
+// console.log("color_pallete[2]は");
+// console.log(color_pallete[2]);
 console.log(color_pallete);
 console.log(timer_frame);
