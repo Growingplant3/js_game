@@ -1,4 +1,15 @@
 // 初期化
+// ターン設定
+var turn = 0;
+  // 0:初期化　→　次へ
+  // 1:カードをめくる　→　次へ
+  // 2:めくったカードの判定　→　次へ
+  // 3:図柄一致判定　→　次へ、不一致なら5へ
+  // 4:合致後の処理　→　7へ
+  // 5:カードを裏返す　→　次へ
+  // 6:配列初期化　→　1へ
+  // 条件を満たしたら7へ
+  // 7:ゲームクリアorゲームオーバー　→　最初に戻る
 
 // カウントダウンタイマー
 var timer = document.getElementsByClassName("timer");
@@ -89,14 +100,15 @@ for ( var j = 0; j < fit ** 2; j++) {
 var opened_cards_list = [];
 
 // 図柄一致フラグ
-var matching = 0;
+var matching = false;
 
-
+// 揃った図柄のidを格納する配列
+var matched_ids = [];
 
 
 // 機能
-
 // クリックしたら?をめくる処理
+// while (turn == 0) {}
 function flip_the_card(e) {
   var choiced_card = e.currentTarget;
   // 同一通し番号は認めない = 同じ枠を二度クリックしても無効
@@ -125,8 +137,11 @@ for (var i=0; i < td_tags.length; i++) {
 
 // カードを3枚めくったら、判定する処理
 function image_match_check() {
-  if () {
-
+  if (opened_cards_list[0] == opened_cards_list[1] && opened_cards_list[1] == opened_cards_list[2]) {
+    matching = true;
+    for (var i=0; i<opened_cards_list.length; i++) {
+      matched_ids.push(opened_cards_list[i]);
+    };
   };
 };
 
@@ -165,5 +180,5 @@ timer_frame[0].style.width = "200px";
 // デバッグ
 console.log("placed_images.lengthは");
 console.log(placed_images.length); // 初期配置の?は36個
-console.log("color_palleteは"); // 36色を確認
+console.log("color_palleteは");
 console.log(color_pallete); // 36色を確認
