@@ -1,3 +1,5 @@
+// 初期化
+
 // カウントダウンタイマー
 var timer = document.getElementsByClassName("timer");
 var timer_frame = document.getElementsByClassName("timer_frame");
@@ -85,49 +87,78 @@ for ( var j = 0; j < fit ** 2; j++) {
 
 // めくったカードの通し番号を格納する配列
 var opened_cards_list = [];
+
+// 図柄一致フラグ
+var matching = 0;
+
+
+
+
+// 機能
+
 // クリックしたら?をめくる処理
 function flip_the_card(e) {
   var choiced_card = e.currentTarget;
-  // めくる関数のデバッグ
-  console.log(choiced_card);
-  console.log(choiced_card.id);
-  placed_images[choiced_card.id].src = color_pallete[choiced_card.id];
-  opened_cards_list.push(choiced_card.id); // 通し番号を配列に格納
-  console.log("めくる関数発火しました"); // デバッグ
+  // 同一通し番号は認めない = 同じ枠を二度クリックしても無効
+  if (opened_cards_list.length == 2 && opened_cards_list[0] != opened_cards_list[2] && opened_cards_list[1] != opened_cards_list[2] ) {
+    placed_images[choiced_card.id].src = color_pallete[choiced_card.id];
+    opened_cards_list.push(choiced_card.id); // 通し番号を配列に格納 3回目
+    console.log(opened_cards_list); // デバッグ
+    console.log("めくる関数発火しました"); // デバッグ
+  };
+  if (opened_cards_list.length == 1 && opened_cards_list[0] != opened_cards_list[1]) {
+    placed_images[choiced_card.id].src = color_pallete[choiced_card.id];
+    opened_cards_list.push(choiced_card.id); // 通し番号を配列に格納 2回目
+    console.log(opened_cards_list); // デバッグ
+    console.log("めくる関数発火しました"); // デバッグ
+  };
+  if (opened_cards_list.length == 0) {
+    placed_images[choiced_card.id].src = color_pallete[choiced_card.id];
+    opened_cards_list.push(choiced_card.id); // 通し番号を配列に格納 1回目
+    console.log(opened_cards_list); // デバッグ
+    console.log("めくる関数発火しました"); // デバッグ
+  };
 };
 for (var i=0; i < td_tags.length; i++) {
   td_tags[i].addEventListener('click', flip_the_card, false);
 };
 
+// カードを3枚めくったら、判定する処理
+function image_match_check() {
+  if () {
+
+  };
+};
+
+// めくったカードをそのままにする処理
+
 // めくったカードを戻す処理
 function reverse_the_card() {
-  for ( var i=0; i<fit; i++) {
-    // カードを戻す関数のデバッグ
-    console.log(opened_cards_list);
-    console.log(opened_cards_list[i]);
-    console.log(placed_images);
-    console.log(placed_images[1]);
+  for ( var i=0; i<number_to_align; i++) {
     placed_images[opened_cards_list[i]].src = question;
     console.log("カードを戻す関数発火しました"); // デバッグ
-  }
-  // var opened_cards_list.length = 0; // 初期化
-  console.log(opened_cards_list);
-  console.log("初期化しました");
-}
-// 3回毎に通し番号を格納する配列を初期化する処理
-// function number_clear {
-//   var opened_cards_list.length = 0;
-//   console.log("通し番号を格納する配列を初期化する関数発火しました"); // デバッグ
-// }
+  };
+};
+
+// 3回毎に通し番号を格納する配列を作る初期化する処理
+function number_clear() {
+  opened_cards_list = [];
+  console.log("（通し番号を格納する）配列を初期化する関数発火しました"); // デバッグ
+};
+
 // 暫定でタイマーフレームをクリックしたら発火する設定
 // あとで3回めくって、図柄が揃わなかったら戻す処理として使う
+timer_frame[0].addEventListener('click', image_match_check, false);
 timer_frame[0].addEventListener('click', reverse_the_card, false);
-// timer_frame[0].addEventListener('click', number_clear, false);
+timer_frame[0].addEventListener('click', number_clear, false);
+
+
+
 
 // css あとでbootstrap適応します
 for ( var i = 0; i < td_tags.length; i++) {
   td_tags[i].style.border = "thick solid black";
-}
+};
 timer_frame[0].style.border = "thick solid black";
 timer_frame[0].style.width = "200px";
 
