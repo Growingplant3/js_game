@@ -33,10 +33,8 @@ var turn = 0;
   // 5:合致後の処理　→　7へ
   // 6:カードを裏返す　→　7へ
   // 7:配列初期化　→　1へ
-  // 条件を満たしたら6へ
+  // 条件を満たしたら8へ
   // 8:ゲームクリアorゲームオーバー　→　0へ
-
-// 初期化
 
 //　升目
 var number_to_align = 3; // 何枚揃えたら良いか宣言する
@@ -118,53 +116,66 @@ turn += 1;
 console.log(turn);
 
 // クリックしたら?をめくる処理
-while (judge) { // 勝敗フラグが立つまで続ける必要あり
-  while (turn == 1) {
-    function flip_the_card(e) {
-      // 既に合致したカードはめくれない
-      var choiced_card = e.currentTarget;
-      for (var j=0; j<matched_ids.length; j++) {
-        if (choiced_card.id == matched_ids[j]) {
-          return;
-        };
-      };
-      // 同一通し番号はめくれない = 同じ枠を二度クリックしても無効
-      if (opened_cards_list[0] == opened_cards_list[1] || opened_cards_list[1] == opened_cards_list[2]) {
+// while (judge) { // 勝敗フラグが立つまで続ける必要あり
+function flip_the_card(e) {
+  console.log("あああ");
+  while (turn < 4) {
+    // 既に合致したカードはめくれない
+    var choiced_card = e.currentTarget;
+    for (var j=0; j<matched_ids.length; j++) {
+      if (choiced_card.id == matched_ids[j]) {
+        console.log("いいい");
         return;
       };
-      // 同一通し番号でなければめくる
-      // switch + case + countinue でもうちょっと短く書けそう
-      if (opened_cards_list.length == 2 && opened_cards_list[0] != opened_cards_list[2] && opened_cards_list[1] != opened_cards_list[2] ) {
-        placed_images[choiced_card.id].src = color_pallete[choiced_card.id];
-        opened_cards_list.push(choiced_card.id); // 通し番号を配列に格納 3回目
-        turn += 1;
-        console.log(opened_cards_list); // デバッグ
-        console.log("めくる関数発火しました"); // デバッグ
-      };
-      if (opened_cards_list.length == 1 && opened_cards_list[0] != opened_cards_list[1]) {
-        placed_images[choiced_card.id].src = color_pallete[choiced_card.id];
-        opened_cards_list.push(choiced_card.id); // 通し番号を配列に格納 2回目
-        turn +=1;
-        console.log(opened_cards_list); // デバッグ
-        console.log("めくる関数発火しました"); // デバッグ
-      };
-      if (opened_cards_list.length == 0) {
-        placed_images[choiced_card.id].src = color_pallete[choiced_card.id];
-        opened_cards_list.push(choiced_card.id); // 通し番号を配列に格納 1回目
-        turn += 1
-        console.log(opened_cards_list); // デバッグ
-        console.log("めくる関数発火しました"); // デバッグ
-      };
     };
-    for (var i=0; i < td_tags.length; i++) {
-      td_tags[i].addEventListener('click', flip_the_card, false);
+    // 同一通し番号はめくれない = 同じ枠を二度クリックしても無効
+    // switch (turn) {
+    //   case 3:
+    //     if (opened_cards_list[2] == opened_cards_list[3]) {
+    //       console.log("うわぁ");
+    //       return;
+    //     };
+    //   case 2:
+    //     if (opened_cards_list[1] == opened_cards_list[2]) {
+    //       console.log("ううう");
+    //       return;
+    //     };
+    // };
+    // 同一通し番号でなければめくる
+    // switch + caseでもうちょっと短く書けそう
+    if (opened_cards_list.length == 2 && opened_cards_list[0] != opened_cards_list[2] && opened_cards_list[1] != opened_cards_list[2] ) {
+      console.log("えええ");
+      placed_images[choiced_card.id].src = color_pallete[choiced_card.id];
+      opened_cards_list.push(choiced_card.id); // 通し番号を配列に格納 3回目
+      turn += 1;
+      console.log(opened_cards_list); // デバッグ
+      console.log("めくる関数発火しました"); // デバッグ
     };
-    if (turn ==4) {
-      break;
+    if (opened_cards_list.length == 1 && opened_cards_list[0] != opened_cards_list[1]) {
+      console.log("おおお");
+      placed_images[choiced_card.id].src = color_pallete[choiced_card.id];
+      opened_cards_list.push(choiced_card.id); // 通し番号を配列に格納 2回目
+      turn +=1;
+      console.log(opened_cards_list); // デバッグ
+      console.log("めくる関数発火しました"); // デバッグ
+    };
+    if (opened_cards_list.length == 0) {
+      console.log("かかか");
+      placed_images[choiced_card.id].src = color_pallete[choiced_card.id];
+      opened_cards_list.push(choiced_card.id); // 通し番号を配列に格納 1回目
+      turn += 1
+      console.log(opened_cards_list); // デバッグ
+      console.log("めくる関数発火しました"); // デバッグ
     };
   };
+};
+console.log("111");
+for (var i=0; i < td_tags.length; i++) {
+  td_tags[i].addEventListener('click', flip_the_card, false);
+};
+if (turn == 4) {
+  console.log("くくく");
   judge = false;
-  break;
 };
 
 while (turn == 10) {
