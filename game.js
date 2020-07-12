@@ -50,18 +50,16 @@ var yellow = "yellow.png";
 var light_blue = "light_blue.png";
 var green = "green.png"
 
-// 全ての?を格納する配列(question_images)
-var question_images = [];
-// 全ての?画像をtdに格納、かつ配列(question_images)にも格納
+// 全ての?画像をtdに格納
 for ( var i = 0; i < fit ** 2; i++) {
   var placed_image = document.createElement("img");
+  placed_image.setAttribute('class',"placed_image");
   placed_image.src = question; // ?が初期配置
   placed_image.width = resize; // リサイズ
   placed_image.height = resize; // リサイズ
   td_tags[i].appendChild(placed_image);
-  question_images.push(question);
 }
-var placed_images = document.getElementsByTagName("img");
+var placed_images = document.getElementsByClassName("placed_image");
 
 // 全ての色を配列(color_pallete)に格納
 var color_pallete = [];
@@ -85,19 +83,46 @@ for ( var j = 0; j < fit ** 2; j++) {
   td_tags[j].appendChild(color_image);
 }
 
+// めくったカードの通し番号を格納する配列
+var opened_cards_list = [];
 // クリックしたら?をめくる処理
 function flip_the_card(e) {
   var choiced_card = e.currentTarget;
-  // めくる関数のデバッグ choiced_card*2はあとでchoiced_cardへ変更する必要あり
+  // めくる関数のデバッグ
   console.log(choiced_card);
-  console.log(choiced_card.id*2);
   console.log(choiced_card.id);
-  placed_images[choiced_card.id*2].src = color_pallete[choiced_card.id];
+  placed_images[choiced_card.id].src = color_pallete[choiced_card.id];
+  opened_cards_list.push(choiced_card.id); // 通し番号を配列に格納
   console.log("めくる関数発火しました"); // デバッグ
 };
-for(var i=0; i < td_tags.length; i++) {
+for (var i=0; i < td_tags.length; i++) {
   td_tags[i].addEventListener('click', flip_the_card, false);
 };
+
+// めくったカードを戻す処理
+function reverse_the_card() {
+  for ( var i=0; i<fit; i++) {
+    // カードを戻す関数のデバッグ
+    console.log(opened_cards_list);
+    console.log(opened_cards_list[i]);
+    console.log(placed_images);
+    console.log(placed_images[1]);
+    placed_images[opened_cards_list[i]].src = question;
+    console.log("カードを戻す関数発火しました"); // デバッグ
+  }
+  // var opened_cards_list.length = 0; // 初期化
+  console.log(opened_cards_list);
+  console.log("初期化しました");
+}
+// 3回毎に通し番号を格納する配列を初期化する処理
+// function number_clear {
+//   var opened_cards_list.length = 0;
+//   console.log("通し番号を格納する配列を初期化する関数発火しました"); // デバッグ
+// }
+// 暫定でタイマーフレームをクリックしたら発火する設定
+// あとで3回めくって、図柄が揃わなかったら戻す処理として使う
+timer_frame[0].addEventListener('click', reverse_the_card, false);
+// timer_frame[0].addEventListener('click', number_clear, false);
 
 // css あとでbootstrap適応します
 for ( var i = 0; i < td_tags.length; i++) {
@@ -107,8 +132,7 @@ timer_frame[0].style.border = "thick solid black";
 timer_frame[0].style.width = "200px";
 
 // デバッグ
-console.log(placed_images.length); // デバッグ中は要素が72(2倍)になっている
-console.log(td_tags.length); // 36マスを確認
-// console.log(question_images); // ?配列を確認
-console.log(question_images.length); // ?が36個を確認
+console.log("placed_images.lengthは");
+console.log(placed_images.length); // 初期配置の?は36個
+console.log("color_palleteは"); // 36色を確認
 console.log(color_pallete); // 36色を確認
