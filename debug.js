@@ -1,5 +1,4 @@
 "use strict";
-
 // カウントダウンタイマー
 var timer = document.getElementsByClassName("timer");
 var timer_frame = document.getElementsByClassName("timer_frame");
