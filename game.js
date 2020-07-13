@@ -28,7 +28,7 @@ var time_goes_by = setInterval(function() { // 10ミリ秒毎に発火する関�
 var wait = function() {
   return function() {
     return new Promise(function(resolve/*, reject*/) {
-      setTimeout(resolve, 3000)
+      setTimeout(resolve, 1000)
     });
   };
 };
