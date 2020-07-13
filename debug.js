@@ -32,7 +32,7 @@ var time_goes_by = setInterval(function() { // 10ミリ秒毎に発火する関�
   timer[0].innerHTML = (second + ":" + millisecond);
   if(count_time <= 0) { // 制限時間に到達、もしくは制限時間を過ぎたら
     clearInterval(time_goes_by); // 時間経過を表現する関数を止める
-    console.log("time up!"); // デバッグ
+    alert("女神" + "\n" + "「おぉ、なんということでしょう。" + "\n" + "時間内に薬を届けられなかったのですね。" + "\n" + "キーボードの ctrl + R を押してもう一度挑戦するのです。」");
   }
 },10);
 
@@ -78,12 +78,6 @@ var fine_man = "fine_man.png";
 var fine_woman = "fine_woman.png";
 var fine_old_man = "fine_old_man.png";
 var fine_computer = "fine_computer.png";
-var sick_boy = "sick_boy.png";
-var sick_girl = "sick_girl.png";
-var sick_man = "sick_man.png";
-var sick_woman = "sick_woman.png";
-var sick_old_man = "sick_old_man.png";
-var sick_computer = "sick_computer.png";
 
 // 全ての?画像をtdに格納
 for ( var i = 0; i < fit ** 2; i++) {
@@ -118,16 +112,17 @@ for ( var j = 0; j < fit ** 2; j++) {
   td_tags[j].appendChild(color_image);
 }
 
-// 登場人物の画像を配列に格納
-var all_fine = [fine_boy,fine_girl,fine_man,fine_woman,fine_old_man,fine_computer];
-var all_sick = [sick_boy,sick_girl,sick_man,sick_woman,sick_old_man,sick_computer];
+// 登場人物の画像とメッセージを配列に格納
+var fine_messages = ["＼スーパー◯イヤ人／","＼漲っててきた〜！／","＼元気でました！／","＼買い物行こっと！／","＼わしゃまだ死ねん／","＼ok google.hey siri.／"];
+var fine_characters = [fine_boy,fine_girl,fine_man,fine_woman,fine_old_man,fine_computer];
+// 変更前の画像とメッセージを取得
+var sick_messages = document.getElementsByClassName("sick_messages");
+var sick_characters = document.getElementsByClassName("sick_characters");
 
 // css あとでbootstrap適応します
 for ( var i = 0; i < td_tags.length; i++) {
   td_tags[i].style.border = "thick solid black";
 };
-timer_frame[0].style.border = "thick solid black";
-timer_frame[0].style.width = "200px";
 
 // めくったカードの通し番号を格納する配列
 var opened_cards_list = [];
@@ -234,10 +229,13 @@ var number_clear = function () {
   turn += 1;
   console.log("揃ったカードの枚数は") // デバッグ
   console.log(matched_ids.length); // デバッグ
-  if (matched_ids.length==36) { // 36図柄集めたらゲームくりあ
+  if (matched_ids.length % 6 == 0) { // 6図柄集めるごとに1人回復
+    recover(matched_ids);
+  };
+  if (matched_ids.length == 36) { // 36図柄集めたらゲームクリア
     clearInterval(time_goes_by); // 時間経過を表現する関数を止める
-    console.log("おめでとう、ゲームクリアです"); // デバッグ
-  }
+    alert("女神「よく頑張りましたね、" + "\n" + "苦しんでいる人達は他にもいます。" + "\n" + "ctrl + R を押してもう少し頑張るのです。"); // デバッグ
+  };
   for (var i=0; i < td_tags.length; i++) {
     td_tags[i].addEventListener('click', flip_the_card, false); // 全てのtdをクリックした時に発火する
   };  
@@ -246,4 +244,13 @@ var number_clear = function () {
 console.log("カードをめくる関数を開始できます"); // デバッグ
 for (var i=0; i < td_tags.length; i++) {
   td_tags[i].addEventListener('click', flip_the_card, false); // 全てのtdをクリックした時に発火する
+};
+
+var recover = function (matched_ids) {
+  for (var i=0; i<matched_ids.length/6;i++) {
+    console.log(`${matched_ids.length/6}` + "人の状態が回復しました");
+    sick_messages[matched_ids.length/6-1].innerHTML = fine_messages[matched_ids.length/6-1]
+    sick_characters[matched_ids.length/6-1].src = fine_characters[matched_ids.length/6-1]
+  }
+  return;
 };
