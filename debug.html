@@ -7,8 +7,18 @@
   </head>
   <body>
     <script>
-      var aaa = [];
-      console.log(aaa.length);
+      var wait = function() {
+        return function() {
+          return new Promise(function(resolve/*, reject*/) {
+            setTimeout(resolve, 3000)
+          });
+        };
+      };
+      Promise.resolve()
+        .then(wait())
+        .then(function() {
+          console.log("時が動き出す！");
+      });
     </script>
   </body>
 </html>
