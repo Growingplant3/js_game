@@ -1,5 +1,17 @@
 "use strict";
 
+// ゲームの流れ
+  // 0:初期化 → 1へ
+  // 1:カードをめくる(めくるカードの判定をしながら) → 2へ
+  // 2:カードをめくる(めくるカードの判定をしながら) → 3へ
+  // 3:カードをめくる(めくるカードの判定をしながら) → 4へ
+  // 4:図柄一致判定 → 合致なら5へ、不一致なら6へ
+  // 5:合致後の処理 → 1へ
+  // 6:カードを裏返す → 1へ
+  // 条件を満たしたら7or8へ
+  // 7:タイムアップ
+  // 8:ゲームクリア
+
 // カウントダウンタイマー
 var timer = document.getElementsByClassName("timer");
 var timer_frame = document.getElementsByClassName("timer_frame");
@@ -18,34 +30,20 @@ var time_goes_by = setInterval(function() { // 10ミリ秒毎に発火する関�
     millisecond = "0" + millisecond;
   }
   timer[0].innerHTML = (second + ":" + millisecond);
-  if(count_time <= 0) { // 制限時間に到達、もしくは制限時間を過ぎたら→
+  if(count_time <= 0) { // 制限時間に到達、もしくは制限時間を過ぎたら
     clearInterval(time_goes_by); // 時間経過を表現する関数を止める
     console.log("time up!"); // デバッグ
   }
 },10);
 
-// 時間停止
+// 時間停止 = カード不一致だった時にすぐ裏返さないような処理
 var wait = function() {
   return function() {
     return new Promise(function(resolve/*, reject*/) {
-      setTimeout(resolve, 1000)
+      setTimeout(resolve, 1000) // 1000ミリ秒
     });
   };
 };
-
-// ターン設定
-var turn = 0;
-  // 初期化
-  // 0:ゲームスタート → 1へ
-  // 1:カードをめくる(めくるカードの判定をしながら) → 2へ
-  // 2:カードをめくる(めくるカードの判定をしながら) → 3へ
-  // 3:カードをめくる(めくるカードの判定をしながら) → 4へ
-  // 4:図柄一致判定 → 合致なら5へ、不一致なら6へ
-  // 5:合致後の処理 → 7へ
-  // 6:カードを裏返す → 7へ
-  // 7:配列初期化 → 1へ
-  // 条件を満たしたら8へ
-  // 8:ゲームクリアorゲームオーバー → 0へ
 
 // 升目
 var number_to_align = 3; // 何枚揃えたら良いか宣言する
@@ -57,7 +55,7 @@ for ( var i = 0; i < fit; i++) {
   for ( var j = 0; j < fit; j++) {
     var td_tag = document.createElement("td");
     serial_number += 1;
-    td_tag.setAttribute('id',serial_number); // 通し番号付与
+    td_tag.setAttribute('id',serial_number); // 0から始まる通し番号付与
     tr_tag.appendChild(td_tag);
   }
   game_table.appendChild(tr_tag);
@@ -66,7 +64,7 @@ var td_tags = document.querySelectorAll("td");
 
 // リサイズ値を設定
 var resize = 50;
-// ?と色のパスを宣言
+// 画像のパスを宣言
 var question = "question.png";
 var red = "red.png";
 var vermilion = "vermilion.png";
@@ -74,6 +72,18 @@ var orange = "orange.png";
 var yellow = "yellow.png";
 var light_blue = "light_blue.png";
 var green = "green.png"
+var fine_boy = "fine_boy.png";
+var fine_girl = "fine_girl.png";
+var fine_man = "fine_man.png";
+var fine_woman = "fine_woman.png";
+var fine_old_man = "fine_old_man.png";
+var fine_computer = "fine_computer.png";
+var sick_boy = "sick_boy.png";
+var sick_girl = "sick_girl.png";
+var sick_man = "sick_man.png";
+var sick_woman = "sick_woman.png";
+var sick_old_man = "sick_old_man.png";
+var sick_computer = "sick_computer.png";
 
 // 全ての?画像をtdに格納
 for ( var i = 0; i < fit ** 2; i++) {
@@ -108,6 +118,10 @@ for ( var j = 0; j < fit ** 2; j++) {
   td_tags[j].appendChild(color_image);
 }
 
+// 登場人物の画像を配列に格納
+var all_fine = [fine_boy,fine_girl,fine_man,fine_woman,fine_old_man,fine_computer];
+var all_sick = [sick_boy,sick_girl,sick_man,sick_woman,sick_old_man,sick_computer];
+
 // css あとでbootstrap適応します
 for ( var i = 0; i < td_tags.length; i++) {
   td_tags[i].style.border = "thick solid black";
@@ -121,70 +135,63 @@ var opened_cards_list = [];
 // 揃った図柄のidを格納する配列 = もうめくれないカードのidリスト
 var matched_ids = [];
 
-// ターンエンドフラグ
-// var turn_end = true;
-
 // ゲームスタート
-turn += 1;
+var turn = 1;
 
 // クリックしたら?をめくる処理
-  var flip_the_card = function (element) {
+var flip_the_card = function (element) {
+  if (turn == 5) {
+    console.log("カードをめくる関数を開始しました"); // デバッグ
+    opened_cards_list = [];
+    console.log("(通し番号を格納する)配列を初期化しました"); // デバッグ
+    console.log(opened_cards_list);
+    turn = 1;
+    console.log("ターン数を初期化しました");
     console.log(turn);
-    if (turn == 5) {
-      console.log("カードをめくる関数を開始しました"); // デバッグ
-      opened_cards_list = [];
-      console.log("(通し番号を格納する)配列を初期化しました"); // デバッグ
-      console.log(opened_cards_list);
-      turn = 1;
-      console.log("ターン数を初期化しました");
-      console.log(turn);
-    };
-    // 既に合致したカードはめくれない
-    console.log(element.target.parentNode);
-    var choiced_card = element.target.parentNode;
-    for (var i=0; i<matched_ids.length; i++) {
-      if (choiced_card.id == matched_ids[i]) {
-        console.log("もうそこのマスはめくれません"); // デバッグ
-        return;
-      };
-    };
-    // 同一通し番号はめくれない = 同一通し番号でなければめくる = 同じ枠を二度クリックしても無効
-    if (turn == 3) {
-      if (opened_cards_list[0] == choiced_card.id || opened_cards_list[1] == choiced_card.id) {
-        console.log("3回目のめくりで失敗"); // デバッグ
-      } else {
-        console.log("3回目のめくりが成功"); // デバッグ
-        placed_images[choiced_card.id].src = color_pallete[choiced_card.id];
-        opened_cards_list.push(choiced_card.id); // 通し番号を配列に格納 3回目
-        turn += 1;
-        console.log(opened_cards_list); // デバッグ
-        console.log("カードをめくる関数が終わりました"); // デバッグ
-        image_match_check(turn,opened_cards_list) // 引数を持って次の関数に移動
-      };
-    };
-    if (turn == 2) {
-      if (opened_cards_list[0] == choiced_card.id) {
-        console.log("2回目のめくりで失敗"); // デバッグ
-      } else {
-        console.log("turnの確認");
-        console.log(turn);
-        console.log("2回目のめくりが成功"); // デバッグ
-        placed_images[choiced_card.id].src = color_pallete[choiced_card.id];
-        opened_cards_list.push(choiced_card.id); // 通し番号を配列に格納 2回目
-        turn += 1;
-        console.log(opened_cards_list); // デバッグ
-      };
-    };
-    if (turn == 1) {
-      if (opened_cards_list.length == 0) {
-        console.log("1回目のめくりが成功"); // デバッグ
-        placed_images[choiced_card.id].src = color_pallete[choiced_card.id];
-        opened_cards_list.push(choiced_card.id); // 通し番号を配列に格納 1回目
-        turn += 1
-        console.log(opened_cards_list); // デバッグ
-      };
+  };
+  // 既に合致したカードはめくれない
+  var choiced_card = element.target.parentNode;
+  for (var i=0; i<matched_ids.length; i++) {
+    if (choiced_card.id == matched_ids[i]) {
+      console.log("そこのマスはもうめくれません"); // デバッグ
+      return;
     };
   };
+  // 同一通し番号はめくれない = 同一通し番号でなければめくる = 同じ枠を二度クリックしても無効
+  if (turn == 3) {
+    if (opened_cards_list[0] == choiced_card.id || opened_cards_list[1] == choiced_card.id) {
+      console.log("3回目のめくりで失敗しました"); // デバッグ
+    } else {
+      console.log("3回目のめくりが成功しました"); // デバッグ
+      placed_images[choiced_card.id].src = color_pallete[choiced_card.id];
+      opened_cards_list.push(choiced_card.id); // 通し番号を配列に格納 3回目
+      turn += 1;
+      console.log(opened_cards_list); // デバッグ
+      console.log("カードをめくる関数が終わりました"); // デバッグ
+      image_match_check(turn,opened_cards_list) // 引数を持って次の関数に移動
+    };
+  };
+  if (turn == 2) {
+    if (opened_cards_list[0] == choiced_card.id) {
+      console.log("2回目のめくりで失敗しました"); // デバッグ
+    } else {
+      console.log("2回目のめくりが成功しました"); // デバッグ
+      placed_images[choiced_card.id].src = color_pallete[choiced_card.id];
+      opened_cards_list.push(choiced_card.id); // 通し番号を配列に格納 2回目
+      turn += 1;
+      console.log(opened_cards_list); // デバッグ
+    };
+  };
+  if (turn == 1) {
+    if (opened_cards_list.length == 0) {
+      console.log("1回目のめくりが成功しました"); // デバッグ
+      placed_images[choiced_card.id].src = color_pallete[choiced_card.id];
+      opened_cards_list.push(choiced_card.id); // 通し番号を配列に格納 1回目
+      turn += 1
+      console.log(opened_cards_list); // デバッグ
+    };
+  };
+};
 
 // めくったカードの図柄が一致するか判定する処理
 var image_match_check = function (turn,opened_cards_list) {
@@ -209,26 +216,27 @@ var stay_opened = function (turn,opened_cards_list) {
 
 // めくったカードを戻す処理
 var reverse_the_card = function (turn,opened_cards_list) {
-  console.log("ザ・ワールド！時よ(0.8秒だけ)止まれ！"); // デバッグ
+  console.log("ザ・ワールド！時よ止まれ！"); // デバッグ
   Promise.resolve()
     .then(wait())
     .then(function() {
     for ( var i=0; i<opened_cards_list.length; i++) {
       placed_images[opened_cards_list[i]].src = question;
     };
-    console.log("時は動き出す！");
+    console.log("時は動き出す！"); // デバッグ
     number_clear(turn,opened_cards_list);
   });
   console.log("カードを戻す関数発火しました"); // デバッグ
 };
 
-// 通し番号を格納する配列を作る初期化する処理
+// ゲームクリアもしくはゲーム続行を判定する処理
 var number_clear = function () {
   turn += 1;
-  console.log("揃った番号は")
-  console.log(matched_ids);
-  if (matched_ids.length==36) {
+  console.log("揃ったカードの枚数は") // デバッグ
+  console.log(matched_ids.length); // デバッグ
+  if (matched_ids.length==36) { // 36図柄集めたらゲームくりあ
     clearInterval(time_goes_by); // 時間経過を表現する関数を止める
+    console.log("おめでとう、ゲームクリアです"); // デバッグ
   }
   for (var i=0; i < td_tags.length; i++) {
     td_tags[i].addEventListener('click', flip_the_card, false); // 全てのtdをクリックした時に発火する
