@@ -36,18 +36,18 @@ var wait = function() {
 // ターン設定
 var turn = 0;
   // 初期化
-  // 0:ゲームスタート　→ 1へ
-  // 1:カードをめくる（めくるカードの判定をしながら）　→　2へ
-  // 2:カードをめくる（めくるカードの判定をしながら）　→　3へ
-  // 3:カードをめくる（めくるカードの判定をしながら）　→　4へ
-  // 4:図柄一致判定　→　合致なら5へ、不一致なら6へ
-  // 5:合致後の処理　→　7へ
-  // 6:カードを裏返す　→　7へ
-  // 7:配列初期化　→　1へ
+  // 0:ゲームスタート → 1へ
+  // 1:カードをめくる(めくるカードの判定をしながら) → 2へ
+  // 2:カードをめくる(めくるカードの判定をしながら) → 3へ
+  // 3:カードをめくる(めくるカードの判定をしながら) → 4へ
+  // 4:図柄一致判定 → 合致なら5へ、不一致なら6へ
+  // 5:合致後の処理 → 7へ
+  // 6:カードを裏返す → 7へ
+  // 7:配列初期化 → 1へ
   // 条件を満たしたら8へ
-  // 8:ゲームクリアorゲームオーバー　→　0へ
+  // 8:ゲームクリアorゲームオーバー → 0へ
 
-//　升目
+// 升目
 var number_to_align = 3; // 何枚揃えたら良いか宣言する
 var fit = number_to_align * 2; // 調整
 var serial_number = -1; // 通し番号
@@ -129,10 +129,11 @@ turn += 1;
 
 // クリックしたら?をめくる処理
   var flip_the_card = function (element) {
-    if (turn == 5) {
+    console.log(turn);
+    if (turn == 6) {
       console.log("カードをめくる関数を開始しました"); // デバッグ
       opened_cards_list = [];
-      console.log("（通し番号を格納する）配列を初期化しました"); // デバッグ
+      console.log("(通し番号を格納する)配列を初期化しました"); // デバッグ
       console.log(opened_cards_list);
       turn = 1;
       console.log("ターン数を初期化しました");
@@ -167,11 +168,14 @@ turn += 1;
           console.log("2回目のめくりで失敗"); // デバッグ
           return;
         } else {
+          console.log("turnの確認");
+          console.log(turn);
           console.log("2回目のめくりが成功"); // デバッグ
           placed_images[choiced_card.id].src = color_pallete[choiced_card.id];
           opened_cards_list.push(choiced_card.id); // 通し番号を配列に格納 2回目
           turn += 1;
           console.log(opened_cards_list); // デバッグ
+          break;
         };
       case 1:
         if (opened_cards_list.length == 0) {
@@ -180,6 +184,7 @@ turn += 1;
           opened_cards_list.push(choiced_card.id); // 通し番号を配列に格納 1回目
           turn += 1
           console.log(opened_cards_list); // デバッグ
+          break;
         };
     };
   };
@@ -192,7 +197,7 @@ var image_match_check = function (turn,opened_cards_list) {
     stay_opened(turn,opened_cards_list); // 引数を持って次の関数に移動
   } else {
     console.log("図柄判定関数を発火しましたが、図柄は一致しませんでした"); // デバッグ
-    reverse_the_card(turn,opened_cards_list);　// 引数を持って次の関数に移動
+    reverse_the_card(turn,opened_cards_list); // 引数を持って次の関数に移動
   };
 };
 
@@ -207,7 +212,7 @@ var stay_opened = function (turn,opened_cards_list) {
 
 // めくったカードを戻す処理
 var reverse_the_card = function (turn,opened_cards_list) {
-  console.log("ザ・ワールド！時よ(0.8秒だけ)止まれ！");
+  console.log("ザ・ワールド！時よ(0.8秒だけ)止まれ！"); // デバッグ
   Promise.resolve()
     .then(wait())
     .then(function() {
@@ -222,15 +227,6 @@ var reverse_the_card = function (turn,opened_cards_list) {
 
 // 通し番号を格納する配列を作る初期化する処理
 var number_clear = function () {
-  // turn = 0;
-  // console.log("ターン数を初期化しました");
-  // console.log(turn);
-  // opened_cards_list = [];
-  // console.log("（通し番号を格納する）配列を初期化しました"); // デバッグ
-  // console.log(opened_cards_list);
-  // turn_end = true;
-  // console.log(turn_end);
-  // console.log("カードをめくる関数を開始できます"); // デバッグ
   turn += 1;
   for (var i=0; i < td_tags.length; i++) {
     td_tags[i].addEventListener('click', flip_the_card, false); // 全てのtdをクリックした時に発火する
