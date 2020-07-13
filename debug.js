@@ -120,9 +120,9 @@ var sick_messages = document.getElementsByClassName("sick_messages");
 var sick_characters = document.getElementsByClassName("sick_characters");
 
 // css
-for ( var i = 0; i < td_tags.length; i++) {
-  td_tags[i].style.border = "thick solid black";
-};
+// for ( var i = 0; i < td_tags.length; i++) {
+//   td_tags[i].style.border = "thick solid black";
+// };
 
 // めくったカードの通し番号を格納する配列
 var opened_cards_list = [];

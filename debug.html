@@ -4,23 +4,45 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="debug.css">
     <title>デバッグルーム</title>
   </head>
-    <div class="d-flex justify-content-center container">
-      <img class="d-inline-flex" src="goddess.png" width="300px" height="300px">
-      <div class="d-inline-flex">
-        <p class="">女神「お前達、頼みましたよ。」</p>
-        <div class="">
-          <li>小人A「あたしに任せて。」</li>
-          <li>小人B「60秒しかないぞ！」</li>
-          <li>小人C「みんな急げ〜。」</li>
-          <li>小人D「同じ色を３つ集めて！」</li>
+    <div class="container">
+      <div class="row">
+        <img class="col-4" src="goddess.png" width="300px" height="300px">
+        <div class="col-7 balloon1-left">
+            <p>女神</p>
+            <p>「地上のものたちは今、未知なる病に遭遇しています。</p>
+            <p>　病の原因が分からず、打つ手もなく困り果てています。</p>
+            <p>　命の危機が差し迫っています。</p>
+            <p>　しかし、安心してください。よく効く薬を私が用意しました。</p>
+            <p>　皆さんで手分けしてお薬を届けてきてください。</p>
+            <p>　正しい飲み方は1回3錠です。</p>
+            <p>　違う薬の飲み合わせは危険ですから、必ず同じ薬を用意してください。</p>
+            <p>　とても似ている薬なので、絶対に間違えてはいけません。</p>
+            <p>　残された時間はたったの60秒です。さぁ急いで！！」</p>
         </div>
       </div>
-      <img class="d-inline-flex" src="child.png" width="300px" height="300px">
     </div>
-    <ul class="timer_frame rounded-pill w-50 mx-auto">
-      <li class="display-4 text-center list-group-item">制限時間</li>
+    <div class="container">
+      <div class="row">
+        <div class="col-7 balloon1-right">
+            <li>小人A</li>
+            <li>「同じ薬を三つ揃えるだけね、簡単よ。あたしに任せて！」</li>
+            <li>小人B</li>
+            <li>「ちょっと待って、箱を開けてみないと中身が分からない状態じゃないか！？」</li>
+            <li>小人C</li>
+            <li>「文句を言ってても仕方ないぞ、時間がない。みんな急げ〜。」</li>
+            <li>小人D</li>
+            <li>「違う薬を集めちゃったらやり直しだぞ！集中しろよ！！」</li>
+            <li>小人A</li>
+            <li>「ねぇ、ブラウザの前にいるアナタも協力してくれるわよね？！」</li>
+        </div>
+        <img class="col-4" src="child.png" width="300px" height="300px">
+      </div>
+    </div>
+    <ul class="timer_frame rounded-pill w-75 mx-auto">
+      <li class="display-4 text-center list-group-item">カウントダウンタイマー</li>
       <li class="timer display-4 text-center list-group-item"></li>
     </ul>
     <table id="game_table" class="mx-auto"></table>
