@@ -1,3 +1,5 @@
+"use strict";
+
 // カウントダウンタイマー
 var timer = document.getElementsByClassName("timer");
 var timer_frame = document.getElementsByClassName("timer_frame");
@@ -30,14 +32,6 @@ var wait = function() {
     });
   };
 };
-// 時間停止の使い方
-// console.log("ザ・ワールド！時よ(0.8秒だけ)止まれ！");
-// Promise.resolve()
-//   .then(wait())
-//   .then(function() {
-// ここに目的の処理を書きます。
-//     console.log("時が動き出す！");
-// });
 
 // ターン設定
 var turn = 0;
@@ -128,17 +122,24 @@ var opened_cards_list = [];
 var matched_ids = [];
 
 // ターンエンドフラグ
-var turn_end = true;
+// var turn_end = true;
 
 // ゲームスタート
 turn += 1;
 
 // クリックしたら?をめくる処理
-while (turn_end) {
-  turn_end = false;
-  var flip_the_card = (function flip_the_card(element) {
+  var flip_the_card = function (element) {
+    if (turn == 5) {
+      console.log("カードをめくる関数を開始しました"); // デバッグ
+      opened_cards_list = [];
+      console.log("（通し番号を格納する）配列を初期化しました"); // デバッグ
+      console.log(opened_cards_list);
+      turn = 1;
+      console.log("ターン数を初期化しました");
+      console.log(turn);
+    };
     // 既に合致したカードはめくれない
-    console.log(element.target);
+    console.log(element.target.parentNode);
     var choiced_card = element.target.parentNode;
     for (var i=0; i<matched_ids.length; i++) {
       if (choiced_card.id == matched_ids[i]) {
@@ -181,15 +182,10 @@ while (turn_end) {
           console.log(opened_cards_list); // デバッグ
         };
     };
-  });
-};
-console.log("カードをめくる関数を開始できます"); // デバッグ
-for (var i=0; i < td_tags.length; i++) {
-  td_tags[i].addEventListener('click', flip_the_card, false); // 全てのtdをクリックした時に発火する
-};
+  };
 
 // めくったカードの図柄が一致するか判定する処理
-var image_match_check = (function image_match_check(turn,opened_cards_list) {
+var image_match_check = function (turn,opened_cards_list) {
   if (color_pallete[opened_cards_list[0]] == color_pallete[opened_cards_list[1]] &&
     color_pallete[opened_cards_list[1]] == color_pallete[opened_cards_list[2]]) {
     console.log("図柄判定関数を発火しまして、図柄は一致しました"); // デバッグ
@@ -198,19 +194,19 @@ var image_match_check = (function image_match_check(turn,opened_cards_list) {
     console.log("図柄判定関数を発火しましたが、図柄は一致しませんでした"); // デバッグ
     reverse_the_card(turn,opened_cards_list);　// 引数を持って次の関数に移動
   };
-});
+};
 
 // 合致したカードはそのままにする処理
-var stay_opened = (function stay_opened(turn,opened_cards_list) {
+var stay_opened = function (turn,opened_cards_list) {
   for (var i=0; i<opened_cards_list.length; i++) {
     matched_ids.push(opened_cards_list[i]);
   };
   console.log("カードはそのままにする関数を発火しました"); // デバッグ
   number_clear(turn,opened_cards_list);
-});
+};
 
 // めくったカードを戻す処理
-var reverse_the_card = (function reverse_the_card(turn,opened_cards_list) {
+var reverse_the_card = function (turn,opened_cards_list) {
   console.log("ザ・ワールド！時よ(0.8秒だけ)止まれ！");
   Promise.resolve()
     .then(wait())
@@ -222,15 +218,26 @@ var reverse_the_card = (function reverse_the_card(turn,opened_cards_list) {
     number_clear(turn,opened_cards_list);
   });
   console.log("カードを戻す関数発火しました"); // デバッグ
-});
+};
 
 // 通し番号を格納する配列を作る初期化する処理
-var number_clear = (function number_clear(turn,opened_cards_list) {
-  turn = 0;
-  console.log("ターン数を初期化しました");
-  opened_cards_list = [];
-  console.log("（通し番号を格納する）配列を初期化する関数発火しました"); // デバッグ
-  turn_end = true;
-  console.log("めくる関数に戻ります");
-  flip_the_card();
-});
+var number_clear = function () {
+  // turn = 0;
+  // console.log("ターン数を初期化しました");
+  // console.log(turn);
+  // opened_cards_list = [];
+  // console.log("（通し番号を格納する）配列を初期化しました"); // デバッグ
+  // console.log(opened_cards_list);
+  // turn_end = true;
+  // console.log(turn_end);
+  // console.log("カードをめくる関数を開始できます"); // デバッグ
+  turn += 1;
+  for (var i=0; i < td_tags.length; i++) {
+    td_tags[i].addEventListener('click', flip_the_card, false); // 全てのtdをクリックした時に発火する
+  };  
+};
+
+console.log("カードをめくる関数を開始できます"); // デバッグ
+for (var i=0; i < td_tags.length; i++) {
+  td_tags[i].addEventListener('click', flip_the_card, false); // 全てのtdをクリックした時に発火する
+};
