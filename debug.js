@@ -119,7 +119,7 @@ var fine_characters = [fine_boy,fine_girl,fine_man,fine_woman,fine_old_man,fine_
 var sick_messages = document.getElementsByClassName("sick_messages");
 var sick_characters = document.getElementsByClassName("sick_characters");
 
-// css あとでbootstrap適応します
+// css
 for ( var i = 0; i < td_tags.length; i++) {
   td_tags[i].style.border = "thick solid black";
 };
