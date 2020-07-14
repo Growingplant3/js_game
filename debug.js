@@ -11,6 +11,10 @@
 // 7:タイムアップ
 // 8:ゲームクリア
 
+var music = new Audio('correct.mp3');
+console.log(music.src);
+music.src.play;
+
 var timer_frame = document.getElementsByClassName("timer_frame");
 
 var game_initialize = function() { // game_initializeの始まり
@@ -133,13 +137,6 @@ var opened_cards_list = [];
 var matched_ids = [];
 
 // 正解音
-<audio id="sound_file" preload="auto">
-	<source src="http://〜.mp3" type="audio/mp3">
-</audio>
-
-function correct_sound() {
-	document.getElementById( 'correct_file' ).play() ;
-};
 
 // 不正解音
 
