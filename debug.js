@@ -11,7 +11,8 @@
 // 7:タイムアップ
 // 8:ゲームクリア
 
-var music = new Audio('correct.mp3');
+var music = new Audio("correct.mp3");
+console.log(music);
 console.log(music.src);
 music.src.play;
 
