@@ -38,7 +38,6 @@ var game_initialize = function() {
       clearInterval(time_goes_by); // 時間経過を表現する関数を止める
       alert("女神" + "\n" + "「おぉ、なんということでしょう。" + "\n" + "時間内に薬を届けられなかったのですね。" + "\n" + 
       "まだ勇気があるならば、もう一度挑戦するのです。」");
-      console.log("バイツァ・ダスト！");
       game_initialize();
     }
   },10);
