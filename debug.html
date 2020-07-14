@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="debug.css">
     <title>デバッグルーム</title>
   </head>
+  <body>
+    <audio id="correct" src="correct.mp3"></audio>
+    <audio id="wrong" src="wrong.mp3"></audio>
     <div class="container">
       <div class="row">
         <img class="col-4" src="goddess.png" width="300px" height="300px">
@@ -69,11 +72,17 @@
         </div>
       </div>
     </div>
-    <ul class="rounded-pill w-75 mx-auto">
-      <li class="timer_frame display-4 text-center list-group-item">カウントダウンタイマー</li>
-      <li class="timer display-4 text-center list-group-item"></li>
-    </ul>
-    <table id="game_table" class="mx-auto"></table>
+    <div class="container">
+      <div class="row">
+        <div class="timer_frame col-2 rounded-pill w-25 mx-auto">
+          <li class="text-center list-group-item">タイマー</li>
+          <li class="timer text-center list-group-item"></li>
+        </div>
+        <div class="col-10">
+          <table id="game_table" class="mx-auto"></table>
+        </div>
+      </div>
+    </div>
     <script type="text/javascript" src="debug.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

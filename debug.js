@@ -11,11 +11,6 @@
 // 7:タイムアップ
 // 8:ゲームクリア
 
-var music = new Audio("correct.mp3");
-console.log(music);
-console.log(music.src);
-music.src.play;
-
 var timer_frame = document.getElementsByClassName("timer_frame");
 
 var game_initialize = function() { // game_initializeの始まり
@@ -137,10 +132,6 @@ var opened_cards_list = [];
 // 揃った図柄のidを格納する配列 = もうめくれないカードのidリスト
 var matched_ids = [];
 
-// 正解音
-
-// 不正解音
-
 // ゲームスタート
 var turn = 1;
 
@@ -159,6 +150,9 @@ var flip_the_card = function (element) {
   var choiced_card = element.target.parentNode;
   for (var i=0; i<matched_ids.length; i++) {
     if (choiced_card.id == matched_ids[i]) {
+      var wrong = document.getElementById("wrong");
+      wrong.currentTime = 0;
+      wrong.play(); // 不正解音
       console.log("そこのマスはもうめくれません"); // デバッグ
       return;
     };
@@ -166,6 +160,9 @@ var flip_the_card = function (element) {
   // 同一通し番号はめくれない = 同一通し番号でなければめくる = 同じ枠を二度クリックしても無効
   if (turn == 3) {
     if (opened_cards_list[0] == choiced_card.id || opened_cards_list[1] == choiced_card.id) {
+      var wrong = document.getElementById("wrong");
+      wrong.currentTime = 0;
+      wrong.play(); // 不正解音
       console.log("3回目のめくりで失敗しました"); // デバッグ
     } else {
       console.log("3回目のめくりが成功しました"); // デバッグ
@@ -179,6 +176,9 @@ var flip_the_card = function (element) {
   };
   if (turn == 2) {
     if (opened_cards_list[0] == choiced_card.id) {
+      var wrong = document.getElementById("wrong");
+      wrong.currentTime = 0;
+      wrong.play(); // 不正解音
       console.log("2回目のめくりで失敗しました"); // デバッグ
     } else {
       console.log("2回目のめくりが成功しました"); // デバッグ
@@ -204,9 +204,15 @@ var image_match_check = function (turn,opened_cards_list) {
   if (color_pallete[opened_cards_list[0]] == color_pallete[opened_cards_list[1]] &&
     color_pallete[opened_cards_list[1]] == color_pallete[opened_cards_list[2]]) {
     console.log("図柄判定関数を発火しまして、図柄は一致しました"); // デバッグ
+    var correct = document.getElementById("correct");
+    correct.currentTime = 0;
+    correct.play(); // 正解音
     stay_opened(turn,opened_cards_list); // 引数を持って次の関数に移動
   } else {
     console.log("図柄判定関数を発火しましたが、図柄は一致しませんでした"); // デバッグ
+    var wrong = document.getElementById("wrong");
+    wrong.currentTime = 0;
+    wrong.play(); // 不正解音
     reverse_the_card(turn,opened_cards_list); // 引数を持って次の関数に移動
   };
 };

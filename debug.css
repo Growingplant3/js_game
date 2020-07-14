@@ -61,3 +61,14 @@ td {
 li {
   list-style: none;
 }
+
+table {
+  margin-bottom: 20px;
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.timer_frame {
+  margin-right: 0;
+  margin-left: 0;
+}
