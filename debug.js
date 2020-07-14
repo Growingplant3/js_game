@@ -132,6 +132,17 @@ var opened_cards_list = [];
 // 揃った図柄のidを格納する配列 = もうめくれないカードのidリスト
 var matched_ids = [];
 
+// 正解音
+<audio id="sound_file" preload="auto">
+	<source src="http://〜.mp3" type="audio/mp3">
+</audio>
+
+function correct_sound() {
+	document.getElementById( 'correct_file' ).play() ;
+};
+
+// 不正解音
+
 // ゲームスタート
 var turn = 1;
 
