@@ -1,24 +1,30 @@
 "use strict";
-
 // ゲームの流れ
-  // 0:初期化 → 1へ
-  // 1:カードをめくる(めくるカードの判定をしながら) → 2へ
-  // 2:カードをめくる(めくるカードの判定をしながら) → 3へ
-  // 3:カードをめくる(めくるカードの判定をしながら) → 4へ
-  // 4:図柄一致判定 → 合致なら5へ、不一致なら6へ
-  // 5:合致後の処理 → 1へ
-  // 6:カードを裏返す → 1へ
-  // 条件を満たしたら7or8へ
-  // 7:タイムアップ
-  // 8:ゲームクリア
+// 0:初期化 → 1へ
+// 1:カードをめくる(めくるカードの判定をしながら) → 2へ
+// 2:カードをめくる(めくるカードの判定をしながら) → 3へ
+// 3:カードをめくる(めくるカードの判定をしながら) → 4へ
+// 4:図柄一致判定 → 合致なら5へ、不一致なら6へ
+// 5:合致後の処理 → 1へ
+// 6:カードを裏返す → 1へ
+// 条件を満たしたら7or8へ
+// 7:タイムアップ
+// 8:ゲームクリア
+
+var timer_frame = document.getElementsByClassName("timer_frame");
+
+var game_initialize = function() { // game_initializeの始まり
+
+var serial_number = 0;
+var game_table = document.getElementById("game_table");
+while (game_table.firstChild) {
+  game_table.removeChild(game_table.firstChild);
+};
 
 // カウントダウンタイマー
 var timer = document.getElementsByClassName("timer");
-var timer_frame = document.getElementsByClassName("timer_frame");
 var timer_setting = 60; // 秒で設定
-var limit_time = timer_setting * 100; // 制限時間
-var today = new Date();
-var count_time = limit_time; // 時間経過を表現する変数に中身を入れ替える
+var count_time = timer_setting * 100; // 桁調整
 var time_goes_by = setInterval(function() { // 10ミリ秒毎に発火する関数
   count_time -= 1; // 制限時間から10ミリ秒毎に1ずつ引かれていく
   var second = Math.floor(count_time / 100);
@@ -61,6 +67,7 @@ for ( var i = 0; i < fit; i++) {
   game_table.appendChild(tr_tag);
 }
 var td_tags = document.querySelectorAll("td");
+console.log(td_tags);
 
 // リサイズ値を設定
 var resize = 50;
@@ -113,16 +120,11 @@ for ( var j = 0; j < fit ** 2; j++) {
 }
 
 // 登場人物の画像とメッセージを配列に格納
-var fine_messages = ["＼スーパー◯イヤ人／","＼漲っててきた〜！／","＼元気でました！／","＼買い物行こっと！／","＼わしゃまだ死ねん／","＼ok google.hey siri.／"];
+var fine_messages = ["＼もう大丈夫！／","＼漲っててきた〜！／","＼元気が出ました！／","＼買い物行こっと！／","＼わしゃまだ死ねん／","＼ok google.hey siri.／"];
 var fine_characters = [fine_boy,fine_girl,fine_man,fine_woman,fine_old_man,fine_computer];
 // 変更前の画像とメッセージを取得
 var sick_messages = document.getElementsByClassName("sick_messages");
 var sick_characters = document.getElementsByClassName("sick_characters");
-
-// css
-// for ( var i = 0; i < td_tags.length; i++) {
-//   td_tags[i].style.border = "thick solid black";
-// };
 
 // めくったカードの通し番号を格納する配列
 var opened_cards_list = [];
@@ -241,11 +243,6 @@ var number_clear = function () {
   };  
 };
 
-console.log("カードをめくる関数を開始できます"); // デバッグ
-for (var i=0; i < td_tags.length; i++) {
-  td_tags[i].addEventListener('click', flip_the_card, false); // 全てのtdをクリックした時に発火する
-};
-
 var recover = function (matched_ids) {
   for (var i=0; i<matched_ids.length/6;i++) {
     console.log(`${matched_ids.length/6}` + "人の状態が回復しました");
@@ -254,3 +251,12 @@ var recover = function (matched_ids) {
   }
   return;
 };
+
+console.log("カードをめくる関数を開始できます"); // デバッグ
+for (var i=0; i < td_tags.length; i++) {
+  td_tags[i].addEventListener('click', flip_the_card, false); // 全てのtdをクリックした時に発火する
+};
+
+}; // game_initializeの終わり
+
+timer_frame[0].addEventListener('click', game_initialize, false); // ゲーム開始もしくはゲーム再開する関数
