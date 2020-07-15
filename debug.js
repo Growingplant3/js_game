@@ -13,17 +13,19 @@
 
 var game_initialize = function() {
 
-  var serial_number = 0;
+  // テーブルの初期化
   var game_table = document.getElementById("game_table");
   while (game_table.firstChild) {
     game_table.removeChild(game_table.firstChild);
   };
+  // 登場人物のメッセージ格納タグを取得
   var sick_messages = document.getElementsByClassName("sick_messages");
   var default_sick_messages = ["＼喉が痛いヨォ／","＼頭が痛くって／","＼吐き気がします／",
   "＼咳が止まりません／","＼お腹が痛いんじゃ／","＼syntax error／"];
   for ( var i =0; i<sick_messages.length; i++) {
     sick_messages[i].innerHTML = default_sick_messages[i];
   }
+  // 登場人物の画像ファイル格納タグを取得
   var sick_characters = document.getElementsByClassName("sick_characters");
   var sick_boy = "sick_boy.png";
   var sick_girl = "sick_girl.png";
@@ -140,9 +142,6 @@ var game_initialize = function() {
   var fine_messages = ["＼もう大丈夫だヨォ！／","＼漲ってきた〜！／","＼元気が出ました！／",
   "＼買い物行こっと！／","＼わしゃまだ死ねん／","＼ok google.hey siri.／"];
   var fine_characters = [fine_boy,fine_girl,fine_man,fine_woman,fine_old_man,fine_computer];
-  // 登場人物の回復前の画像とメッセージを取得
-  var sick_messages = document.getElementsByClassName("sick_messages");
-  var sick_characters = document.getElementsByClassName("sick_characters");
 
   // 開けた箱の通し番号を格納する配列
   var opened_cards_list = [];
