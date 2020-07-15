@@ -139,7 +139,7 @@ var game_initialize = function() {
   }
 
   // 登場人物の回復後の画像とメッセージを配列に格納
-  var fine_messages = ["＼もう大丈夫だヨォ！／","＼漲ってきた〜！／","＼元気が出ました！／","＼買い物行こっと！／","＼わしゃまだ死ねん／","＼ok google.hey siri.／"];
+  var fine_messages = ["＼もう大丈夫だヨ！／","＼漲ってきた〜！／","＼元気が出ました！／","＼買い物行こっと！／","＼わしゃまだ死ねん／","＼ok google.hey siri.／"];
   var fine_characters = [fine_boy,fine_girl,fine_man,fine_woman,fine_old_man,fine_computer];
   // 登場人物の回復前の画像とメッセージを取得
   var sick_messages = document.getElementsByClassName("sick_messages");
