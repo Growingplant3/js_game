@@ -18,6 +18,23 @@ var game_initialize = function() {
   while (game_table.firstChild) {
     game_table.removeChild(game_table.firstChild);
   };
+  var sick_boy = "sick_boy.png";
+  var sick_girl = "sick_girl.png";
+  var sick_man = "sick_man.png";
+  var sick_woman = "sick_woman.png";
+  var sick_old_man = "sick_old_man.png";
+  var sick_computer = "sick_computer.png";
+  var sick_messages = document.getElementsByClassName("sick_messages");
+  var sick_characters = document.getElementsByClassName("sick_characters");
+  var default_sick_messages = ["＼喉が痛いヨォ／","＼頭が痛くって／","＼吐き気がします／",
+  "＼咳が止まりません／","＼お腹が痛いんじゃ／","＼syntax error／"];
+  var default_sick_characters = [sick_boy,sick_girl,sick_man,sick_woman,sick_old_man,sick_computer];
+  for ( var i =0; i<sick_messages.lenth; i++) {
+    sick_messages[i].innerHTML = default_sick_messages[i];
+  }
+  for ( var j=0; j<sick_characters.length; j++) {
+    sick_characters[j].src = default_sick_characters[j];
+  }
 
   // カウントダウンタイマー
   var timer = document.getElementsByClassName("timer");
@@ -120,7 +137,8 @@ var game_initialize = function() {
   }
 
   // 登場人物の回復後の画像とメッセージを配列に格納
-  var fine_messages = ["＼もう大丈夫！／","＼漲っててきた〜！／","＼元気が出ました！／","＼買い物行こっと！／","＼わしゃまだ死ねん／","＼ok google.hey siri.／"];
+  var fine_messages = ["＼もう大丈夫！／","＼漲っててきた〜！／","＼元気が出ました！／",
+  "＼買い物行こっと！／","＼わしゃまだ死ねん／","＼ok google.hey siri.／"];
   var fine_characters = [fine_boy,fine_girl,fine_man,fine_woman,fine_old_man,fine_computer];
   // 登場人物の回復前の画像とメッセージを取得
   var sick_messages = document.getElementsByClassName("sick_messages");
@@ -250,7 +268,8 @@ var game_initialize = function() {
     };
     if (matched_ids.length == 36) { // 36図柄集めたらゲームクリア
       clearInterval(time_goes_by); // 時間経過を表現する関数を止める
-      alert("女神「よく頑張りましたね、" + "\n" + "しかしまだ他にも苦しんでいるもの達はたくさんいます。" + "\n" + "次の場所へ旅立つのです！"); // デバッグ
+      alert("女神「よく頑張りましたね、" + "\n" + "しかしまだ他にも苦しんでいるもの達はたくさんいます。" + "\n" + 
+      "次の場所へ旅立つのです！"); // デバッグ
     };
     for (var i=0; i < td_tags.length; i++) {
       td_tags[i].addEventListener('click', flip_the_card, false); // 全てのtdをクリックした時に発火する
