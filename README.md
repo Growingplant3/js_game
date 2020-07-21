@@ -29,4 +29,4 @@ Google Chromeで動作を確認しました。
 
 ## 備考
 ご意見ご感想は[製作者](https://twitter.com/Growingplant3)までお願い致します。<br>
-Rubyだとrandom,sleepがあってとても楽、でもJavascriptだと関数を使わなければこれらが表現できない、めちゃくちゃむずかった (´；д；｀)
+Rubyだとrandom,sleepがあってとても楽、でもJavascriptだと関数を使わなければこれらが表現できなかった (´；д；｀)
